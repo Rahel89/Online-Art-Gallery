@@ -11,7 +11,7 @@ const Home = () => {
                 <div className="navbar-nav">
                     <Link to="/gallery" className="nav-link mx-3">Main Gallery</Link>
                     <a className="nav-link mx-3" href="#">Submit Artwork</a>
-                    <a className="nav-link mx-3" href="#">Events</a>
+                    <Link to="/events" className="nav-link mx-3">Events</Link>
                 </div>
             </nav>
 
