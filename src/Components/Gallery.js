@@ -77,7 +77,7 @@ const sculpture = [
                       ))}
                   </div>
                   <div className="text-center mt-4">
-                    <Link to="/gallery/category/painting" className="btn btn-primary">Browse More</Link>
+                    <Link to="/photography" className="btn btn-primary">Browse More</Link>
                 </div>
               </section>
 
@@ -99,7 +99,7 @@ const sculpture = [
                       ))}
                   </div>
                   <div className="text-center mt-4">
-                    <Link to="/gallery/category/painting" className="btn btn-primary">Browse More</Link>
+                    <Link to="/sculpture" className="btn btn-primary">Browse More</Link>
                 </div>
               </section>
           </div>

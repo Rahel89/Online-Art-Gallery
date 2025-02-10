@@ -5,6 +5,7 @@ import Gallery from './Components/Gallery';
 import Events from './Components/Events';
 import SubmitArt from './Components/SubmitArt';
 import Painting from './Components/painting';
+import Sculpture from './Components/sculpture';
 
 
 
@@ -17,6 +18,7 @@ function App() {
          <Route path="/events" element={<Events/>} />
          <Route path="/submitart" element={<SubmitArt/>} />
          <Route path="/painting" element={<Painting/>} />
+         <Route path="/sculpture" element={<Sculpture/>} />
       </Routes>
     </Router>
   );
