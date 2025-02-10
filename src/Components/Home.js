@@ -2,21 +2,25 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faInstagram, faTwitter } from '@fortawesome/free-brands-svg-icons';
+import painting from '../images/painting.jpg'
+import photo from '../images/photo.jpg'
+import sculpt from '../images/sculpt.jpg'
+
 
 const categories = [
     {
       title: "Painting",
-      image: require(""),
-      link: "/gallery",
+      image: require("../images/painting.jpg"),
+      link: "/painting",
     },
     {
       title: "Photography",
-      image: require(""),
+      image: require("../images/photo.jpg"),
       link: "/photography",
     },
     {
       title: "Sculpture",
-      image: require(""),
+      image: require("../images/sculpt.jpg"),
       link: "/sculpture",
     }
   ];
@@ -51,7 +55,7 @@ const Home = () => {
               <img src={category.image} className="card-img-top" alt={category.title} />
               <div className="card-body text-center">
                 <h5 className="card-title">{category.title}</h5>
-                <a href={category.link} className="btn btn-primary">Explore {category.title}</a>
+                <a href={category.link} className="btn btn-primary"> Browse more</a>
               </div>
             </div>
           </div>
