@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 // take out mx-2 and replace with bootstrap 5.3
 // add a browse more button under each section
 //add hover effect
+//change section id name
 
 const paintings = [
     { title: "Starry Night", description: "A famous painting by Van Gogh." },
