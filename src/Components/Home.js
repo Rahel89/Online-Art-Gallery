@@ -30,8 +30,9 @@ const Home = () => {
         <div>
             <nav className="navbar navbar-expand-lg navbar-light bg-light justify-content-center">
                 <div className="navbar-nav">
-                    <Link to="/submitart" className="nav-link mx-3">Submit Artwork</Link>
+                    <Link to="/submitart" className="nav-link mx-3">Become a member</Link>
                     <Link to="/events" className="nav-link mx-3">Events</Link>
+                    <Link to="/artistpage" className="nav-link mx-3">Our Artists</Link>
                 </div>
             </nav>
 

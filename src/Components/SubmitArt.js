@@ -1,50 +1,67 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import  { useState } from "react";
+import axios from 'axios';
 
-const SubmitArt = () => {
+const ArtistSignup = () => {
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
+    email: '',
+    phone: '',
     title: '',
-    price: '',
-    category: 'Painting',
-    image: null
+    bio: ''
   });
   const [errors, setErrors] = useState({});
+  const [successMessage, setSuccessMessage] = useState('');
 
   const validateForm = () => {
     const newErrors = {};
     if (!formData.firstName) newErrors.firstName = 'First Name is required.';
     if (!formData.lastName) newErrors.lastName = 'Last Name is required.';
-    if (!formData.title) newErrors.title = 'Artwork Title is required.';
-    if (!formData.price) {
-      newErrors.price = 'Price is required.';
-    } else if (formData.price <= 0) {
-      newErrors.price = 'Price must be a positive number.';
-    }
-    if (!formData.image) newErrors.image = 'Image upload is required.';
+    if (!formData.email) newErrors.email = 'Email is required.';
+    if (!formData.phone) newErrors.phone = 'Phone number is required.';
 
     return newErrors;
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const validationErrors = validateForm();
+
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
+      setSuccessMessage(''); 
     } else {
-      console.log('Form submitted successfully!', formData);
-      // form submission to server
-      setFormData({
-        firstName: '',
-        lastName: '',
-        title: '',
-        price: '',
-        category: 'Painting',
-        image: null
-      });
-      setErrors({});
+      try {
+        const artistData = {
+          Fname: formData.firstName,
+          Lname: formData.lastName,
+          email: formData.email,
+          phone_number: formData.phone
+        };
+        //  API endpoint
+        await axios.post(`${process.env.REACT_APP_API_URL}/signup`, artistData);
+        console.log('Form submitted successfully!', artistData);
+
+        // success message
+        setSuccessMessage('Successfully registered!');
+        
+        // Reset form
+        setFormData({
+          firstName: '',
+          lastName: '',
+          email: '',
+          phone: '',
+          title: '',
+          bio: ''
+        });
+        setErrors({});
+      } catch (error) {
+        console.error('Error submitting form:', error);
+        setErrors({ submit: 'Failed to submit the form. Please try again.' });
+        setSuccessMessage('');
+      }
     }
   };
 
@@ -57,17 +74,9 @@ const SubmitArt = () => {
     setErrors({ ...errors, [name]: '' }); // Clears the error for the current field
   };
 
-  const handleFileChange = (e) => {
-    setFormData({
-      ...formData,
-      image: e.target.files[0] // to store the uploaded file
-    });
-    setErrors({ ...errors, image: '' }); 
-  };
-
   return (
     <div className="container text-center mt-5">
-      <h2>Submit Your Artwork</h2>
+      <h2>Become a member</h2>
       <form className="mt-4" onSubmit={handleSubmit}>
         <div className="mb-3 d-flex align-items-center">
           <label className="form-label me-3" style={{ minWidth: "120px" }}>First Name</label>
@@ -96,60 +105,39 @@ const SubmitArt = () => {
         </div>
 
         <div className="mb-3 d-flex align-items-center">
-          <label className="form-label me-3" style={{ minWidth: "120px" }}>Title</label>
+          <label className="form-label me-3" style={{ minWidth: "120px" }}>Email</label>
           <input
-            type="text"
-            name="title"
-            value={formData.title}
+            type="email"
+            name="email"
+            value={formData.email}
             onChange={handleChange}
             className="form-control"
-            placeholder="Enter artwork title"
+            placeholder="Enter your email"
           />
-          {errors.title && <span className="error text-danger">{errors.title}</span>}
+          {errors.email && <span className="error text-danger">{errors.email}</span>}
         </div>
 
         <div className="mb-3 d-flex align-items-center">
-          <label className="form-label me-3" style={{ minWidth: "120px" }}>Price</label>
+          <label className="form-label me-3" style={{ minWidth: "120px" }}>Phone Number</label>
           <input
-            type="number"
-            name="price"
-            value={formData.price}
+            type="tel"
+            name="phone"
+            value={formData.phone}
             onChange={handleChange}
             className="form-control"
-            placeholder="Enter price"
+            placeholder="Enter your phone number"
           />
-          {errors.price && <span className="error text-danger">{errors.price}</span>}
+          {errors.phone && <span className="error text-danger">{errors.phone}</span>}
         </div>
 
-        <div className="mb-3 d-flex align-items-center">
-          <label className="form-label me-3" style={{ minWidth: "120px" }}>Category</label>
-          <select
-            name="category"
-            value={formData.category}
-            onChange={handleChange}
-            className="form-control"
-          >
-            <option value="Painting">Painting</option>
-            <option value="Photography">Photography</option>
-            <option value="Sculpture">Sculpture</option>
-          </select>
-          {errors.category && <span className="error text-danger">{errors.category}</span>} 
-        </div>
 
-        <div className="mb-3 d-flex align-items-center">
-          <label className="form-label me-3" style={{ minWidth: "120px" }}>Upload Image</label>
-          <input
-            type="file"
-            className="form-control"
-            onChange={handleFileChange}
-          />
-          {errors.image && <span className="error text-danger">{errors.image}</span>}
-        </div>
+        {errors.submit && <span className="error text-danger">{errors.submit}</span>}
+        {successMessage && <span className="success text-success">{successMessage}</span>} 
 
-        <button type="submit" className="btn btn-primary">Submit Artwork</button>
+        <button type="submit" className="btn btn-primary">Signup</button>
       </form>
     </div>
   );
 };
 
-export default SubmitArt;
+export default ArtistSignup;

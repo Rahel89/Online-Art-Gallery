@@ -1,60 +1,50 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import sc2 from '../images/sc2.jpg'
+import sc5 from '../images/sc5.jpg'
+import sc6 from '../images/sc6.jpg'
+import sc7 from '../images/sc7.jpg'
+import sc8 from '../images/sc8.jpg'
+import sc9 from '../images/sc9.jpg'
+
 
 const sculptures = [
     {
-      title: "VENDORS",
-      artist: "Mahlet Gebre",
-      price: "60,000",
-      image: require('../images/vendors.jpg')
-    },
-    {
       title: "Morning",
-      artist: "Daniel Sisay",
+      artist: "Dawit Senay",
       price: "70,000",
-      image: require('../images/morning.jpg')
+      image: require('../images/sc2.jpg')
     },
-    {
-      title: "Lalibela",
-      artist: "Ermyas Sine",
-      price: "80,000",
-      image: require('../images/lalibela.jpg')
-    },
-    {
-      title: "Beauty",
-      artist: "Robel Ayalew",
-      price: "90,000",
-      image: require('../images/beauty.jpg')
-    },
+   
     {
       title: "Love",
-      artist: "Sisay Teshome",
+      artist: "Surafel Adane",
       price: "50,000",
-      image: require('../images/love.jpg')
+      image: require('../images/sc5.jpg')
     },
     {
       title: "The God Father",
-      artist: "Birhan Teka",
+      artist: "Biruk Terefe",
       price: "55,000",
-      image: require('../images/godfather.jpg')
+      image: require('../images/sc9.jpg')
     },
     {
       title: "The Flower",
-      artist: "Ras Habte",
+      artist: "Leul Habte",
       price: "75,000",
-      image: require('../images/flower.jpg')
+      image: require('../images/sc6.jpg')
     },
     {
       title: "Ethiopia",
-      artist: "Tesfaye Gashe",
+      artist: "Tesfu Gashaw",
       price: "67,000",
-      image: require('../images/Ethiopia.jpg')
+      image: require('../images/sc7.jpg')
     },
     {
       title: "Reality",
-      artist: "Yonas Million",
+      artist: "Yafet Mengesha",
       price: "77,000",
-      image: require('../images/reality.jpg')
+      image: require('../images/sc8.jpg')
     }
   ];
   

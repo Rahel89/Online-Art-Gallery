@@ -1,11 +1,11 @@
 import React from 'react';
+import SearchBar from './SearchBar';
+import { useState, useEffect } from 'react'; 
+import axios from 'axios'; 
 import { Link } from 'react-router-dom';
 import vendors from '../images/vendors.jpg'
 import morning from '../images/morning.jpg'
 import lalibela from '../images/lalibela.jpg'
-import beauty from '../images/beauty.jpg'
-import love from '../images/love.jpg'
-import godfather from '../images/godfather.jpg'
 import flower from '../images/flower.jpg'
 import reality from '../images/reality.jpg'
 import Ethiopia from '../images/Ethiopia.jpg'
@@ -31,24 +31,6 @@ const paintings = [
     image: require('../images/lalibela.jpg')
   },
   {
-    title: "Beauty",
-    artist: "Robel Ayalew",
-    price: "90,000",
-    image: require('../images/beauty.jpg')
-  },
-  {
-    title: "Love",
-    artist: "Sisay Teshome",
-    price: "50,000",
-    image: require('../images/love.jpg')
-  },
-  {
-    title: "The God Father",
-    artist: "Birhan Teka",
-    price: "55,000",
-    image: require('../images/godfather.jpg')
-  },
-  {
     title: "The Flower",
     artist: "Ras Habte",
     price: "75,000",
@@ -69,23 +51,55 @@ const paintings = [
 ];
 
 const Painting = () => {
+  const [query, setQuery] = useState("");
+  const [results, setResults] = useState([]);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (query) {
+          const response = await axios.get(`http://localhost:3000/search?q=${query}`);
+          setResults(response.data);
+          setError(null); // Clear any previous errors
+        } else {
+          setResults([]);
+        }
+      } catch (err) {
+        setError("Error fetching data"); // Set error message
+        setResults([]); // Clear results on error
+      }
+    };
+
+    fetchData();
+  }, [query]);
+
   return (
-    <div className="container text-center mt-5">
-      <h2 className="mb-4">Gallery of Paintings</h2>
-      <p>Browse through our collections of paintings from renowned Ethiopian artists</p>
-      <div className="row">
-        {paintings.map((painting, index) => (
-          <div key={index} className="col-md-4 mb-4">
-            <figure className="card shadow-lg p-3 bg-light">
-              <img src={painting.image} alt={painting.title} className="card-img-top" />
-              <figcaption className="card-body">
-                <h5 className="card-title">{painting.title}</h5>
-                <p className="card-text"><strong>Artist:</strong> {painting.artist}</p>
-                <p className="card-text"><strong>Price:</strong> {painting.price}</p>
-              </figcaption>
-            </figure>
-          </div>
-        ))}
+    <div>
+      <SearchBar 
+        query={query} 
+        setQuery={setQuery} 
+        results={results} 
+        error={error} 
+        setError={setError} 
+      />
+      <div className="container text-center mt-5">
+        <h2 className="mb-4">Gallery of Paintings</h2>
+        <p>Browse through our collections of paintings from renowned Ethiopian artists</p>
+        <div className="row">
+          {paintings.map((painting, index) => (
+            <div key={index} className="col-md-4 mb-4">
+              <figure className="card shadow-lg p-3 bg-light">
+                <img src={painting.image} alt={painting.title} className="card-img-top" />
+                <figcaption className="card-body">
+                  <h5 className="card-title">{painting.title}</h5>
+                  <p className="card-text"><strong>Artist:</strong> {painting.artist}</p>
+                  <p className="card-text"><strong>Price:</strong> {painting.price}</p>
+                </figcaption>
+              </figure>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

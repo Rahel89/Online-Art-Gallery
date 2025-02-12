@@ -1,14 +1,13 @@
 import React from "react";
+import SearchBar from "./SearchBar";
 import { Link } from 'react-router-dom';
 import Addis from '../images/Addis.jpg'
 import early from '../images/early.jpg'
 import shadows from '../images/shadows.jpg'
 import faith from '../images/faith.jpg'
-import family from '../images/family.jpg'
 import fashion from '../images/fashion.jpg'
 import father from '../images/father.jpg'
-import zion from '../images/zion.jpg'
-import vibrance from '../images/vibrance.jpg'
+
 
 const photos = [
     {
@@ -46,25 +45,7 @@ const photos = [
       artist: "Addis Aemero",
       price: "55,000",
       image: require('../images/father.jpg')
-    },
-    {
-      title: "Zion",
-      artist: "Tsion Haileselassie",
-      price: "75,000",
-      image: require('../images/zion.jpg')
-    },
-    {
-      title: "Family",
-      artist: "Martha Tadesse",
-      price: "67,000",
-      image: require('../images/family.jpg')
-    },
-    {
-      title: "Vibrance",
-      artist: "Aida Muluneh",
-      price: "77,000",
-      image: require('../images/vibrance.jpg')
-    }
+    }, 
   ];
   
   const Photography = () => {
