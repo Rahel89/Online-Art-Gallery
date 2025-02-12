@@ -6,6 +6,7 @@ import event2 from '../images/event7.jpg'
 import event6 from '../images/event6.jpg'
 import event4 from '../images/event4.jpg'
 
+
 const images = [
   require("../images/event1.jpg"),
   require("../images/event7.jpg"),
@@ -58,7 +59,7 @@ const events = [
         setErrors(validationErrors);
       } else {
         console.log('Form submitted successfully!', formData);
-        // data to be sent to the server
+        // Here you can send the data to the server
         setFormData({
           firstName: '',
           lastName: '',
@@ -77,7 +78,7 @@ const events = [
         ...formData,
         [name]: value
       });
-      setErrors({ ...errors, [name]: '' }); 
+      setErrors({ ...errors, [name]: '' }); // Clear the error for the current field
     };
   
     return (
@@ -175,5 +176,5 @@ const events = [
       </div>
     );
   };
-
+  
   export default Events;

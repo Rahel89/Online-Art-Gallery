@@ -7,6 +7,7 @@ import SubmitArt from './Components/SubmitArt';
 
 
 
+
 function App() {
   return (
     <Router>
