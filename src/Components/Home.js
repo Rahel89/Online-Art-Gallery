@@ -33,6 +33,8 @@ const Home = () => {
                     <Link to="/submitart" className="nav-link mx-3">Become a member</Link>
                     <Link to="/events" className="nav-link mx-3">Events</Link>
                     <Link to="/artistpage" className="nav-link mx-3">Our Artists</Link>
+                    <Link to="/gallery" className="nav-link mx-3">Gallery</Link>
+                    <Link to="/chicagoart" className="nav-link mx-3">Art Institute of Chicago</Link>
                 </div>
             </nav>
 

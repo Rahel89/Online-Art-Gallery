@@ -1,0 +1,45 @@
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+
+const ChicagoArt = () => {
+    const [artworks, setArtworks] = useState([]);
+  
+    useEffect(() => {
+      axios
+        .get("https://api.artic.edu/api/v1/artworks?limit=10")
+        .then((response) => {
+          console.log("API Response:", response.data); // Debugging: Log the API response
+          if (response.data && response.data.data) {
+            setArtworks(response.data.data);
+          }
+        })
+        .catch((error) => console.error("Error fetching images:", error));
+    }, []);
+  
+    return (
+      <div>
+        <h2>Art Gallery</h2>
+        <div className="grid">
+          {artworks.length > 0 ? (
+            artworks.map((art) => (
+              <div key={art.id}>
+                {art.image_id ? ( // Check if image_id exists
+                  <img
+                    src={`https://www.artic.edu/iiif/2/${art.image_id}/full/200,/0/default.jpg`}
+                    alt={art.title}
+                  />
+                ) : (
+                  <p>No image available</p>
+                )}
+                <p>{art.title || "Untitled"}</p>
+              </div>
+            ))
+          ) : (
+            <p>Loading artworks...</p> // Message while data is being fetched
+          )}
+        </div>
+      </div>
+    );
+  };
+  
+  export default ChicagoArt;

@@ -10,38 +10,38 @@ import sc9 from '../images/sc9.jpg'
 
 const sculptures = [
     {
-      title: "Morning",
+      title: "Head",
       artist: "Dawit Senay",
       price: "70,000",
       image: require('../images/sc2.jpg')
     },
    
     {
-      title: "Love",
+      title: "Model",
       artist: "Surafel Adane",
       price: "50,000",
       image: require('../images/sc5.jpg')
     },
     {
-      title: "The God Father",
+      title: "Figurine",
       artist: "Biruk Terefe",
       price: "55,000",
       image: require('../images/sc9.jpg')
     },
     {
-      title: "The Flower",
+      title: "Bust",
       artist: "Leul Habte",
       price: "75,000",
       image: require('../images/sc6.jpg')
     },
     {
-      title: "Ethiopia",
+      title: "Lady",
       artist: "Tesfu Gashaw",
       price: "67,000",
       image: require('../images/sc7.jpg')
     },
     {
-      title: "Reality",
+      title: "King",
       artist: "Yafet Mengesha",
       price: "77,000",
       image: require('../images/sc8.jpg')

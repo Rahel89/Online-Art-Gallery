@@ -1,5 +1,4 @@
 import React from "react";
-import SearchBar from "./SearchBar";
 import { Link } from 'react-router-dom';
 import Addis from '../images/Addis.jpg'
 import early from '../images/early.jpg'
@@ -41,7 +40,7 @@ const photos = [
       image: require('../images/faith.jpg')
     },
     {
-      title: "Grand Father",
+      title: "Grandfather",
       artist: "Addis Aemero",
       price: "55,000",
       image: require('../images/father.jpg')

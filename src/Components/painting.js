@@ -51,55 +51,23 @@ const paintings = [
 ];
 
 const Painting = () => {
-  const [query, setQuery] = useState("");
-  const [results, setResults] = useState([]);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        if (query) {
-          const response = await axios.get(`http://localhost:3000/search?q=${query}`);
-          setResults(response.data);
-          setError(null); // Clear any previous errors
-        } else {
-          setResults([]);
-        }
-      } catch (err) {
-        setError("Error fetching data"); // Set error message
-        setResults([]); // Clear results on error
-      }
-    };
-
-    fetchData();
-  }, [query]);
-
   return (
-    <div>
-      <SearchBar 
-        query={query} 
-        setQuery={setQuery} 
-        results={results} 
-        error={error} 
-        setError={setError} 
-      />
-      <div className="container text-center mt-5">
-        <h2 className="mb-4">Gallery of Paintings</h2>
-        <p>Browse through our collections of paintings from renowned Ethiopian artists</p>
-        <div className="row">
-          {paintings.map((painting, index) => (
-            <div key={index} className="col-md-4 mb-4">
-              <figure className="card shadow-lg p-3 bg-light">
-                <img src={painting.image} alt={painting.title} className="card-img-top" />
-                <figcaption className="card-body">
-                  <h5 className="card-title">{painting.title}</h5>
-                  <p className="card-text"><strong>Artist:</strong> {painting.artist}</p>
-                  <p className="card-text"><strong>Price:</strong> {painting.price}</p>
-                </figcaption>
-              </figure>
-            </div>
-          ))}
-        </div>
+    <div className="container text-center mt-5">
+      <h2 className="mb-4">Gallery of Paintings</h2>
+      <p>Browse through our collections of paintings from renowned Ethiopian artists</p>
+      <div className="row">
+        {paintings.map((painting, index) => (
+          <div key={index} className="col-md-4 mb-4">
+            <figure className="card shadow-lg p-3 bg-light">
+              <img src={painting.image} alt={painting.title} className="card-img-top" />
+              <figcaption className="card-body">
+                <h5 className="card-title">{painting.title}</h5>
+                <p className="card-text"><strong>Artist:</strong> {painting.artist}</p>
+                <p className="card-text"><strong>Price:</strong> {painting.price}</p>
+              </figcaption>
+            </figure>
+          </div>
+        ))}
       </div>
     </div>
   );

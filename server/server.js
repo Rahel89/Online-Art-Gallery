@@ -3,38 +3,60 @@ const express = require('express');
 const app = express();
 const pool = require('./db'); 
 const cors = require("cors");
+const axios = require("axios");
 
 app.use(cors());
 app.use(express.json());
 
+const UNSPLASH_API_URL = "https://api.unsplash.com/search/photos";
+const ACCESS_KEY = process.env.UNSPLASH_ACCESS_KEY; //in .env file
+const ART_INSTITUTE_API = "https://api.artic.edu/api/v1/artworks";
 
-const paintings = [
-  { id: 1, title: "VENDORS", artist: "Mahlet Gebre" },
-  { id: 2, title: "Morning", artist: "Daniel Sisay" },
-];
-
-const photos = [
-  { id: 1, title: "The early riser", artist: "Amanuel Tsegaye" },
-  { id: 2, title: "Moving Shadows", artist: "Girma Berta" },
-];
-
-const sculptures = [
-  { id: 1, title: "Beauty", artist: "Robel Ayalew" },
-  { id: 2, title: "Love", artist: "Sisay Teshome" },
-];
-
-// Search endpoint
-app.get("/search", (req, res) => {
-  const query = req.query.q.toLowerCase();
-  const results = [
-    ...paintings.filter((p) => p.title.toLowerCase().includes(query) || p.artist.toLowerCase().includes(query)),
-    ...photos.filter((p) => p.title.toLowerCase().includes(query) || p.artist.toLowerCase().includes(query)),
-    ...sculptures.filter((p) => p.title.toLowerCase().includes(query) || p.artist.toLowerCase().includes(query)),
-  ];
-  res.json(results);
+// unsplash api endpoint
+app.get("/api/images", async (req, res) => {
+  try {
+    const response = await axios.get(`${UNSPLASH_API_URL}?query=art&per_page=9`, {
+      headers: { Authorization: `Client-ID ${ACCESS_KEY}` }
+    });
+    res.json(response.data.results);
+  } catch (error) {
+    res.status(500).json({ error: "Error fetching images" });
+  }
 });
 
-// to fetch artist from database
+// chicago api
+
+app.get("/api/artworks", async (req, res) => {
+  try {
+    const { data } = await axios.get(`${ART_INSTITUTE_API}?limit=10`);
+    res.json(data);
+  } catch (error) {
+    console.error("Error fetching artworks:", error);
+    res.status(500).json({ error: "Failed to fetch artworks" });
+  }
+});
+
+
+// Fetch artists with optional search query for searching
+app.get('/artists', async (req, res) => {
+  const searchQuery = req.query.search || ''; // Get the search query from the URL
+
+  try {
+    const result = await pool.query(
+      `SELECT * FROM artists
+       WHERE Fname ILIKE $1 OR Lname ILIKE $1`,
+      [`%${searchQuery}%`] // Use parameterized queries to prevent SQL injection
+    );
+
+    // Send a 200 OK response with the retrieved artists
+    res.status(200).json(result.rows);
+  } catch (err) {
+    console.error('Error fetching artists:', err);
+    res.status(500).json({ error: 'Failed to fetch artists.' });
+  }
+});
+
+// to fetch artist from database to be displayed on artist page
 app.get('/artists', async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM artists'); // Adjust query as needed
@@ -82,16 +104,26 @@ app.put('/artists/:id', async (req, res) => {
     return res.status(400).json({ error: 'First name, last name, and email are required.' });
   }
 
+  // Log the values being used for the update
+  console.log('Updating artist with values:', {
+    Fname,
+    Lname,
+    email,
+    phone_number,
+    artistId
+  });
+
   try {
     const result = await pool.query(
       'UPDATE artists SET Fname = $1, Lname = $2, email = $3, phone_number = $4 WHERE artist_id = $5',
       [Fname, Lname, email, phone_number, artistId]
     );
 
+    console.log('Update result:', result); // Log the result of the update
     if (result.rowCount === 0) {
       return res.status(404).json({ error: 'Artist not found.' });
     }
-
+    
     res.status(200).json({ message: 'Artist updated successfully!' });
   } catch (error) {
     console.error('Error updating artist:', error);
