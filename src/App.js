@@ -14,6 +14,8 @@ import ChicagoArt from './Components/ChicagoArt';
 
 
 
+
+
 function App() {
   return (
     <Router>
@@ -28,7 +30,8 @@ function App() {
          <Route path="/artistpage" element={<ArtistPage />} />
          <Route path="/gallery" element={<Gallery/>} />
          <Route path="/chicagoart" element={<ChicagoArt/>} />
-
+         
+        
       </Routes>
     </Router>
   );

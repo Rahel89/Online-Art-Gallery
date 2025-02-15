@@ -5,6 +5,8 @@ import event1 from '../images/event1.jpg'
 import event2 from '../images/event7.jpg'
 import event6 from '../images/event6.jpg'
 import event4 from '../images/event4.jpg'
+import Navbar from './NavBar';
+import axios from 'axios';
 
 
 const images = [
@@ -20,46 +22,55 @@ const events = [
     "Sculpture Showcase",
     "Painting Masterclass"
   ];
-  const Events = () => {
-    const [index, setIndex] = useState(0);
-    const [formData, setFormData] = useState({
-      firstName: '',
-      lastName: '',
-      email: '',
-      phoneNumber: '',
-      selectedEvent: '',
-      dateTime: ''
-    });
-    const [errors, setErrors] = useState({});
-  
-    const handleNextImage = () => {
-      setIndex((prevIndex) => (prevIndex + 1) % images.length);
-    };
-  
-    const validateForm = () => {
-      const newErrors = {};
-      if (!formData.firstName) newErrors.firstName = 'First Name is required.';
-      if (!formData.lastName) newErrors.lastName = 'Last Name is required.';
-      if (!formData.email) {
-        newErrors.email = 'Email is required.';
-      } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-        newErrors.email = 'Email address is invalid.';
-      }
-      if (!formData.phoneNumber) newErrors.phoneNumber = 'Phone Number is required.';
-      if (!formData.selectedEvent) newErrors.selectedEvent = 'Please select an event.';
-      if (!formData.dateTime) newErrors.dateTime = 'Please select a date and time.';
-  
-      return newErrors;
-    };
-  
-    const handleSubmit = (event) => {
-      event.preventDefault();
-      const validationErrors = validateForm();
-      if (Object.keys(validationErrors).length > 0) {
-        setErrors(validationErrors);
-      } else {
-        console.log('Form submitted successfully!', formData);
-        // Here you can send the data to the server
+
+
+const Events = () => {
+  const [index, setIndex] = useState(0);
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phoneNumber: '',
+    selectedEvent: '',
+    dateTime: ''
+  });
+  const [errors, setErrors] = useState({});
+  const [successMessage, setSuccessMessage] = useState('');
+
+  const handleNextImage = () => {
+    setIndex((prevIndex) => (prevIndex + 1) % images.length);
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+    if (!formData.firstName) newErrors.firstName = 'First Name is required.';
+    if (!formData.lastName) newErrors.lastName = 'Last Name is required.';
+    if (!formData.email) {
+      newErrors.email = 'Email is required.';
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = 'Email address is invalid.';
+    }
+    if (!formData.phoneNumber) newErrors.phoneNumber = 'Phone Number is required.';
+    if (!formData.selectedEvent) newErrors.selectedEvent = 'Please select an event.';
+    if (!formData.dateTime) newErrors.dateTime = 'Please select a date and time.';
+
+    return newErrors;
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const validationErrors = validateForm();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      setSuccessMessage(''); // Clear success message on error
+    } else {
+      console.log('Form submitted successfully!', formData);
+      
+      try {
+        const response = await axios.post('http://localhost:3000/register', formData);
+        console.log(response.data.message); // Confirmation message
+        setSuccessMessage('Registration successful!'); // Set success message
+        // Reset form after successful submission
         setFormData({
           firstName: '',
           lastName: '',
@@ -69,19 +80,26 @@ const events = [
           dateTime: ''
         });
         setErrors({});
+      } catch (error) {
+        console.error('Error during registration:', error);
+        setErrors({ submission: 'Failed to register for the event.' });
+        setSuccessMessage(''); // Clear success message on error
       }
-    };
-  
-    const handleChange = (e) => {
-      const { name, value } = e.target;
-      setFormData({
-        ...formData,
-        [name]: value
-      });
-      setErrors({ ...errors, [name]: '' }); // Clear the error for the current field
-    };
-  
-    return (
+    }
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value
+    });
+    setErrors({ ...errors, [name]: '' }); // Clear the error for the current field
+  };
+
+  return (
+    <div>
+      <Navbar />
       <div className="container text-center mt-5">
         <div className="row">
           <div className="col-md-6">
@@ -91,10 +109,12 @@ const events = [
               Next
             </button>
           </div>
-  
+
           <div className="col-md-6">
             <h2>Register for an Event</h2>
+            {successMessage && <div className="alert alert-success mt-3">{successMessage}</div>}
             <form className="mt-3" onSubmit={handleSubmit}>
+              {/* Form Fields */}
               <div className="mb-3 d-flex align-items-center">
                 <label className="form-label me-3" style={{ minWidth: "120px" }}>First Name</label>
                 <input
@@ -174,7 +194,8 @@ const events = [
           </div>
         </div>
       </div>
-    );
-  };
-  
-  export default Events;
+    </div>
+  );
+};
+
+export default Events;

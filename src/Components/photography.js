@@ -6,6 +6,7 @@ import shadows from '../images/shadows.jpg'
 import faith from '../images/faith.jpg'
 import fashion from '../images/fashion.jpg'
 import father from '../images/father.jpg'
+import Navbar from "./NavBar";
 
 
 const photos = [
@@ -49,6 +50,8 @@ const photos = [
   
   const Photography = () => {
     return (
+      <div>
+      <Navbar/>
       <div className="container text-center mt-5">
         <h2 className="mb-4">Gallery of Photography</h2>
         <p>Browse through our collections of photography from rising Ethiopian photographers</p>
@@ -67,6 +70,7 @@ const photos = [
           ))}
         </div>
       </div>
+    </div>
     );
   };
   

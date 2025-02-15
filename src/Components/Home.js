@@ -5,6 +5,8 @@ import { faFacebook, faInstagram, faTwitter } from '@fortawesome/free-brands-svg
 import painting from '../images/painting.jpg'
 import photo from '../images/photo.jpg'
 import sculpt from '../images/sculpt.jpg'
+import '../animation.css';
+import Navbar from './NavBar';
 
 
 const categories = [
@@ -28,21 +30,13 @@ const categories = [
 const Home = () => {
     return (
         <div>
-            <nav className="navbar navbar-expand-lg navbar-light bg-light justify-content-center">
-                <div className="navbar-nav">
-                    <Link to="/submitart" className="nav-link mx-3">Become a member</Link>
-                    <Link to="/events" className="nav-link mx-3">Events</Link>
-                    <Link to="/artistpage" className="nav-link mx-3">Our Artists</Link>
-                    <Link to="/gallery" className="nav-link mx-3">Gallery</Link>
-                    <Link to="/chicagoart" className="nav-link mx-3">Art Institute of Chicago</Link>
-                </div>
-            </nav>
+           <Navbar/>
 
             <div className="container my-4">
                 <div className="row">
                     <div className="col">
-                        <h1>Welcome to Our Art Gallery</h1>
-                        <p>Presenting up and coming and renowned Ethiopian creatives </p>
+                        <h1 className="pulse text-center mb-4">Welcome to Our Art Gallery</h1>
+                        <p className="text-center mb-4">Presenting up and coming and renowned Ethiopian creatives </p>
                     </div>
                   
                 </div>

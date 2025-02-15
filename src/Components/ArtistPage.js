@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import EditArtistModal from './EditArtistModal';
+import Navbar from './NavBar';
 
 const ArtistPage = () => {
   const [artists, setArtists] = useState([]);
@@ -78,6 +79,8 @@ const ArtistPage = () => {
   };
 
   return (
+    <div>
+    <Navbar/>
     <div className="container mt-5">
       <h2>Our Artists</h2>
       {error && <div className="alert alert-danger">{error}</div>}
@@ -98,7 +101,7 @@ const ArtistPage = () => {
         {artists.map(artist => (
           <div className="col-md-4" key={artist.artist_id}>
             <div className="card mb-4">
-              <div className="card-body">
+              <div className="card-body shadow-lg p-3 bg-light">
                 <h5 className="card-title">{artist.fname} {artist.lname}</h5>
                 <p className="card-text">Email: {artist.email}</p>
                 <p className="card-text">Phone: {artist.phone_number}</p>
@@ -116,6 +119,7 @@ const ArtistPage = () => {
         onSave={handleSave} 
       />
     </div>
+  </div>
   );
 };
 

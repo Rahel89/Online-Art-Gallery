@@ -6,6 +6,7 @@ import sc6 from '../images/sc6.jpg'
 import sc7 from '../images/sc7.jpg'
 import sc8 from '../images/sc8.jpg'
 import sc9 from '../images/sc9.jpg'
+import Navbar from './NavBar';
 
 
 const sculptures = [
@@ -50,6 +51,8 @@ const sculptures = [
   
   const Sculpture = () => {
     return (
+      <div>
+      <Navbar/>
       <div className="container text-center mt-5">
         <h2 className="mb-4">Gallery of Sculptures</h2>
         <p>Browse through our collections of sculptures from renowned Ethiopian artists</p>
@@ -68,6 +71,7 @@ const sculptures = [
           ))}
         </div>
       </div>
+    </div>
     );
   };
   

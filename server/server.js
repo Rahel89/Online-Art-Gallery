@@ -24,6 +24,7 @@ app.get("/api/images", async (req, res) => {
   }
 });
 
+
 // chicago api
 
 app.get("/api/artworks", async (req, res) => {
@@ -152,8 +153,57 @@ app.delete('/artists/:id', async (req, res) => {
   }
 });
 
+// endpoint for user registration for an event 
+app.post('/register', async (req, res) => {
+  const { firstName, lastName, email, phoneNumber, selectedEvent } = req.body;
 
+  const client = await pool.connect();
+  try {
+    await client.query('BEGIN');
 
+    // Check if the user already exists
+    const userQuery = `
+      INSERT INTO users (fname, lname, email, phone_number)
+      VALUES ($1, $2, $3, $4)
+      ON CONFLICT (email) DO UPDATE SET
+      fname = EXCLUDED.fname,
+      lname = EXCLUDED.lname,
+      phone_number = EXCLUDED.phone_number
+      RETURNING user_id;
+    `;
+    const userResult = await client.query(userQuery, [firstName, lastName, email, phoneNumber]);
+    const userId = userResult.rows[0].user_id;
+
+    // Get the event ID
+    const eventQuery = `
+      SELECT event_id FROM events WHERE name = $1;
+    `;
+    const eventResult = await client.query(eventQuery, [selectedEvent]);
+    const eventId = eventResult.rows[0].event_id;
+
+    // Insert the signup into event_Signups
+    const signupQuery = `
+      INSERT INTO event_Signups (user_id, event_id)
+      VALUES ($1, $2)
+      ON CONFLICT (user_id, event_id) DO NOTHING; -- Prevent duplicate signups
+    `;
+    await client.query(signupQuery, [userId, eventId]);
+
+    await client.query('COMMIT');
+    
+    // Check if this was a new registration or an update
+    const isNewUser = userResult.rowCount === 1; // If rowCount is 1, it means the user was newly inserted
+    const responseMessage = isNewUser ? 'Registration successful!' : 'User already registered, event signup updated.';
+
+    res.status(isNewUser ? 201 : 200).json({ message: responseMessage });
+  } catch (err) {
+    await client.query('ROLLBACK');
+    console.error('Error registering for event:', err);
+    res.status(500).json({ error: 'Failed to register for the event.' });
+  } finally {
+    client.release();
+  }
+});
 
 const PORT = 3000;
 app.listen(PORT, () => {

@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import  { useState } from "react";
 import axios from 'axios';
+import Navbar from './NavBar';
 
 const ArtistSignup = () => {
   const [formData, setFormData] = useState({
@@ -75,6 +76,8 @@ const ArtistSignup = () => {
   };
 
   return (
+    <div>
+    <Navbar/>
     <div className="container text-center mt-5">
       <h2>Become a member</h2>
       <form className="mt-4" onSubmit={handleSubmit}>
@@ -137,6 +140,7 @@ const ArtistSignup = () => {
         <button type="submit" className="btn btn-primary">Signup</button>
       </form>
     </div>
+  </div>
   );
 };
 

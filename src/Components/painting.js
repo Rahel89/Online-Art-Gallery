@@ -9,6 +9,7 @@ import lalibela from '../images/lalibela.jpg'
 import flower from '../images/flower.jpg'
 import reality from '../images/reality.jpg'
 import Ethiopia from '../images/Ethiopia.jpg'
+import Navbar from './NavBar';
 
 
 const paintings = [
@@ -52,6 +53,8 @@ const paintings = [
 
 const Painting = () => {
   return (
+    <div>
+    <Navbar/>
     <div className="container text-center mt-5">
       <h2 className="mb-4">Gallery of Paintings</h2>
       <p>Browse through our collections of paintings from renowned Ethiopian artists</p>
@@ -70,6 +73,7 @@ const Painting = () => {
         ))}
       </div>
     </div>
+  </div>
   );
 };
 
