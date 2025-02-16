@@ -10,7 +10,7 @@ const ChicagoArt = () => {
     const fetchArtworks = async () => {
       try {
         const response = await axios.get("https://api.artic.edu/api/v1/artworks?limit=12");
-        console.log("API Response:", response.data); // Debugging log
+        console.log("API Response:", response.data); 
         if (response.data && response.data.data) {
           setArtworks(response.data.data);
         }

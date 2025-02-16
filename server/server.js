@@ -18,7 +18,10 @@ app.get("/api/images", async (req, res) => {
     const response = await axios.get(`${UNSPLASH_API_URL}?query=art&per_page=9`, {
       headers: { Authorization: `Client-ID ${ACCESS_KEY}` }
     });
-    res.json(response.data.results);
+    res.status(200).json({
+      message: "Images fetched successfully.",
+      images: response.data.results
+    });
   } catch (error) {
     res.status(500).json({ error: "Error fetching images" });
   }
@@ -26,11 +29,13 @@ app.get("/api/images", async (req, res) => {
 
 
 // chicago api
-
 app.get("/api/artworks", async (req, res) => {
   try {
-    const { data } = await axios.get(`${ART_INSTITUTE_API}?limit=10`);
-    res.json(data);
+    const { data } = await axios.get(`${ART_INSTITUTE_API}?limit=12`); // 12 images
+    res.status(200).json({
+      message: "Artworks fetched successfully.",
+      artworks: data
+    });
   } catch (error) {
     console.error("Error fetching artworks:", error);
     res.status(500).json({ error: "Failed to fetch artworks" });
@@ -38,19 +43,21 @@ app.get("/api/artworks", async (req, res) => {
 });
 
 
-// Fetch artists with optional search query for searching
+// GET endpoint for searching
 app.get('/artists', async (req, res) => {
-  const searchQuery = req.query.search || ''; // Get the search query from the URL
+  const searchQuery = req.query.search || ''; 
 
   try {
     const result = await pool.query(
       `SELECT * FROM artists
        WHERE Fname ILIKE $1 OR Lname ILIKE $1`,
-      [`%${searchQuery}%`] // Use parameterized queries to prevent SQL injection
+      [`%${searchQuery}%`] //  parameterized queries to prevent SQL injection
     );
 
-    // Send a 200 OK response with the retrieved artists
-    res.status(200).json(result.rows);
+    res.status(200).json({
+      message: 'Artists fetched successfully.',
+      artists: result.rows
+    });
   } catch (err) {
     console.error('Error fetching artists:', err);
     res.status(500).json({ error: 'Failed to fetch artists.' });
@@ -60,8 +67,11 @@ app.get('/artists', async (req, res) => {
 // to fetch artist from database to be displayed on artist page
 app.get('/artists', async (req, res) => {
   try {
-    const result = await pool.query('SELECT * FROM artists'); // Adjust query as needed
-    res.json(result.rows);
+    const result = await pool.query('SELECT * FROM artists'); 
+    res.status(200).json({
+      message: 'Artists fetched successfully.',
+      artists: result.rows
+    });
   } catch (err) {
     console.error('Error fetching artists:', err);
     res.status(500).send('Server error');
@@ -72,7 +82,6 @@ app.get('/artists', async (req, res) => {
 app.post('/signup', async (req, res) => {
   const { Fname, Lname, email, phone_number } = req.body;
 
-  // Basic validation
   if (!Fname || !Lname || !email || !phone_number) {
     return res.status(400).json({ error: 'First name, last name, email, and phone number are required.' });
   }
@@ -84,11 +93,11 @@ app.post('/signup', async (req, res) => {
     );
 
     const artistId = result.rows[0].artist_id;
-    res.status(201).json({ message: 'Artist created successfully!', artistId });
+    res.status(200).json({ message: 'Artist created successfully!', artistId });
   } catch (error) {
     if (error.code === '23505') {
       // Unique violation
-      return res.status(409).json({ error: 'Email already exists.' });
+      return res.status(400).json({ error: 'Email already exists.' });
     }
     console.error('Error inserting artist:', error);
     res.status(500).json({ error: 'An error occurred while creating the artist.' });
@@ -100,12 +109,10 @@ app.put('/artists/:id', async (req, res) => {
   const artistId = parseInt(req.params.id);
   const { Fname, Lname, email, phone_number } = req.body;
 
-  // Basic validation
   if (!Fname || !Lname || !email) {
     return res.status(400).json({ error: 'First name, last name, and email are required.' });
   }
 
-  // Log the values being used for the update
   console.log('Updating artist with values:', {
     Fname,
     Lname,
@@ -120,7 +127,7 @@ app.put('/artists/:id', async (req, res) => {
       [Fname, Lname, email, phone_number, artistId]
     );
 
-    console.log('Update result:', result); // Log the result of the update
+    console.log('Update result:', result); 
     if (result.rowCount === 0) {
       return res.status(404).json({ error: 'Artist not found.' });
     }
@@ -143,7 +150,7 @@ app.delete('/artists/:id', async (req, res) => {
     );
 
     if (result.rowCount === 0) {
-      return res.status(404).json({ error: 'Artist not found.' });
+      return res.status(400).json({ error: 'Artist not found.' });
     }
 
     res.status(200).json({ message: 'Artist deleted successfully!' });
@@ -161,7 +168,7 @@ app.post('/register', async (req, res) => {
   try {
     await client.query('BEGIN');
 
-    // Check if the user already exists
+    // To check if the user already exists
     const userQuery = `
       INSERT INTO users (fname, lname, email, phone_number)
       VALUES ($1, $2, $3, $4)
@@ -181,7 +188,7 @@ app.post('/register', async (req, res) => {
     const eventResult = await client.query(eventQuery, [selectedEvent]);
     const eventId = eventResult.rows[0].event_id;
 
-    // Insert the signup into event_Signups
+    // To insert the signup into event_Signups
     const signupQuery = `
       INSERT INTO event_Signups (user_id, event_id)
       VALUES ($1, $2)
@@ -191,8 +198,8 @@ app.post('/register', async (req, res) => {
 
     await client.query('COMMIT');
     
-    // Check if this was a new registration or an update
-    const isNewUser = userResult.rowCount === 1; // If rowCount is 1, it means the user was newly inserted
+    // To check if this was a new registration or an update
+    const isNewUser = userResult.rowCount === 1; //  rowCount is 1 - the user was newly inserted
     const responseMessage = isNewUser ? 'Registration successful!' : 'User already registered, event signup updated.';
 
     res.status(isNewUser ? 201 : 200).json({ message: responseMessage });

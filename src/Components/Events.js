@@ -1,10 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import  { useState } from "react";
-import event1 from '../images/event1.jpg'
-import event2 from '../images/event7.jpg'
-import event6 from '../images/event6.jpg'
-import event4 from '../images/event4.jpg'
 import Navbar from './NavBar';
 import axios from 'axios';
 
@@ -62,15 +57,14 @@ const Events = () => {
     const validationErrors = validateForm();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
-      setSuccessMessage(''); // Clear success message on error
+      setSuccessMessage(''); 
     } else {
       console.log('Form submitted successfully!', formData);
       
       try {
         const response = await axios.post('http://localhost:3000/register', formData);
         console.log(response.data.message); // Confirmation message
-        setSuccessMessage('Registration successful!'); // Set success message
-        // Reset form after successful submission
+        setSuccessMessage('Registration successful!'); 
         setFormData({
           firstName: '',
           lastName: '',
@@ -83,7 +77,7 @@ const Events = () => {
       } catch (error) {
         console.error('Error during registration:', error);
         setErrors({ submission: 'Failed to register for the event.' });
-        setSuccessMessage(''); // Clear success message on error
+        setSuccessMessage(''); 
       }
     }
   };
@@ -94,7 +88,7 @@ const Events = () => {
       ...formData,
       [name]: value
     });
-    setErrors({ ...errors, [name]: '' }); // Clear the error for the current field
+    setErrors({ ...errors, [name]: '' }); 
   };
 
   return (

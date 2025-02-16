@@ -1,10 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faInstagram, faTwitter } from '@fortawesome/free-brands-svg-icons';
-import painting from '../images/painting.jpg'
-import photo from '../images/photo.jpg'
-import sculpt from '../images/sculpt.jpg'
 import '../animation.css';
 import Navbar from './NavBar';
 
@@ -62,11 +58,11 @@ const Home = () => {
 
             <div className="container bg-light py-4 my-4">
                 <h2>About Us</h2>
-                <p>Welcome to our online gallery showcasing the rich artistic heritage of Ethiopia. We are dedicated to promoting Ethiopian artists, photographers, and sculptors, providing a  platform for their remarkable work to be admired and cherished.
+                <p>Welcome to our online gallery showcasing the rich artistic heritage of Ethiopia. We are dedicated to promoting Ethiopian artists, photographers, and sculptors, providing a  platform for their remarkable work to be admired.
 
 Our goal is to celebrate the diverse cultural expressions and creativity of Ethiopian talent. We curate a collection of artworks that encapsulate the essence of Ethiopian artistry, offering a glimpse into the beauty of Ethiopian art.
 
-Through our platform, we connect art enthusiasts, collectors, and admirers with the vibrant and captivating creations of Ethiopian artists. We strive to foster a deeper appreciation for the cultural richness and artistic brilliance that Ethiopia has to offer.
+Through our platform, we connect art enthusiasts, collectors, and admirers with the vibrant creations of Ethiopian artists. We strive to foster a deeper appreciation for the cultural richness and artistic brilliance that Ethiopia has to offer.
 
 Explore our gallery to discover a captivating array of paintings, photographs, and sculptures.</p>
                 <h5>Follow Us on Social Media</h5>

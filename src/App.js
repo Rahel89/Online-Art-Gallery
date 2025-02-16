@@ -6,7 +6,6 @@ import SubmitArt from './Components/SubmitArt';
 import Painting from './Components/painting';
 import Photography from './Components/photography'
 import Sculpture from './Components/sculpture';
-import SearchBar from './Components/SearchBar';
 import ArtistPage from './Components/ArtistPage';
 import Gallery from './Components/Gallery';
 import ChicagoArt from './Components/ChicagoArt';
@@ -26,7 +25,6 @@ function App() {
          <Route path="/painting" element={<Painting/>} />
          <Route path="/photography" element={<Photography />} />
          <Route path="/sculpture" element={<Sculpture />} />
-         <Route path="/searchbar" element={<SearchBar />} />
          <Route path="/artistpage" element={<ArtistPage />} />
          <Route path="/gallery" element={<Gallery/>} />
          <Route path="/chicagoart" element={<ChicagoArt/>} />

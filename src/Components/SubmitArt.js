@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import  { useState } from "react";
 import axios from 'axios';
 import Navbar from './NavBar';
@@ -45,10 +44,8 @@ const ArtistSignup = () => {
         await axios.post(`${process.env.REACT_APP_API_URL}/signup`, artistData);
         console.log('Form submitted successfully!', artistData);
 
-        // success message
         setSuccessMessage('Successfully registered!');
         
-        // Reset form
         setFormData({
           firstName: '',
           lastName: '',
@@ -72,7 +69,7 @@ const ArtistSignup = () => {
       ...formData,
       [name]: value
     });
-    setErrors({ ...errors, [name]: '' }); // Clears the error for the current field
+    setErrors({ ...errors, [name]: '' }); 
   };
 
   return (
@@ -132,11 +129,8 @@ const ArtistSignup = () => {
           />
           {errors.phone && <span className="error text-danger">{errors.phone}</span>}
         </div>
-
-
         {errors.submit && <span className="error text-danger">{errors.submit}</span>}
         {successMessage && <span className="success text-success">{successMessage}</span>} 
-
         <button type="submit" className="btn btn-primary">Signup</button>
       </form>
     </div>

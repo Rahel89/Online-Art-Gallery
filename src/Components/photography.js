@@ -1,11 +1,4 @@
 import React from "react";
-import { Link } from 'react-router-dom';
-import Addis from '../images/Addis.jpg'
-import early from '../images/early.jpg'
-import shadows from '../images/shadows.jpg'
-import faith from '../images/faith.jpg'
-import fashion from '../images/fashion.jpg'
-import father from '../images/father.jpg'
 import Navbar from "./NavBar";
 
 

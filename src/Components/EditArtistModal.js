@@ -4,7 +4,7 @@ const EditArtistModal = ({ showModal, artist, onClose, onSave }) => {
     const [formData, setFormData] = React.useState({});
   
     useEffect(() => {
-      setFormData({ ...artist }); // Update form data when artist changes
+      setFormData({ ...artist }); 
     }, [artist]);
   
     const handleChange = (e) => {
@@ -18,7 +18,6 @@ const EditArtistModal = ({ showModal, artist, onClose, onSave }) => {
     };
   
     const handleOutsideClick = (e) => {
-      // Check if the click is on the modal backdrop
       if (e.target.classList.contains('modal')) {
         console.log("Modal backdrop clicked");
         onClose();

@@ -7,7 +7,7 @@ const Gallery = () => {
     return (
       <div>
       <Navbar/>
-        <h1>More coming soon</h1>
+        <h1>Digital art coming soon</h1>
         <UnsplashGallery />
       </div>
     );

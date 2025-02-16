@@ -1,11 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import sc2 from '../images/sc2.jpg'
-import sc5 from '../images/sc5.jpg'
-import sc6 from '../images/sc6.jpg'
-import sc7 from '../images/sc7.jpg'
-import sc8 from '../images/sc8.jpg'
-import sc9 from '../images/sc9.jpg'
 import Navbar from './NavBar';
 
 

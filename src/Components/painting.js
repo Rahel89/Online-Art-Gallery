@@ -1,14 +1,4 @@
 import React from 'react';
-import SearchBar from './SearchBar';
-import { useState, useEffect } from 'react'; 
-import axios from 'axios'; 
-import { Link } from 'react-router-dom';
-import vendors from '../images/vendors.jpg'
-import morning from '../images/morning.jpg'
-import lalibela from '../images/lalibela.jpg'
-import flower from '../images/flower.jpg'
-import reality from '../images/reality.jpg'
-import Ethiopia from '../images/Ethiopia.jpg'
 import Navbar from './NavBar';
 
 
