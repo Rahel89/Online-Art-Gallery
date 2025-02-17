@@ -1,4 +1,4 @@
-Tables
+Tables in the database
 
 1.  users table
     This table will storeinformation about users who register for events
@@ -61,3 +61,26 @@ Tables
         FOREIGN KEY (event_id) REFERENCES events(event_id)
 
     );
+
+Project Instructions
+
+1. To run the backend
+   Navigate to server
+   cd server
+
+Install dependecies:
+npm install express pg dotenv cors
+
+Install nodemon for automatic restart of server
+npm install nodemon
+
+Run backend server
+nodemon server.js
+
+2. To run frontend
+   In root directory
+   Install Axios for API communication
+   npm install axios
+
+To start the application
+npm start
